@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from "hono/jwt";
+import { CreateBlog,createBlogInput,updateBlog } from "@01xaryan/medium-common";
 
 export const blogRouter = new Hono<{
     Bindings:{
@@ -43,6 +44,13 @@ blogRouter.post('/', async (c) =>{
       }).$extends(withAccelerate());
 
       const body = await c.req.json();
+      const { success } = createBlogInput.safeParse(body);
+
+      if(!success){
+        return c.json({
+          msg : "Invalid parmater"
+        })
+      }
       const userId = c.get("userId");
 
       try {
@@ -75,7 +83,7 @@ blogRouter.put('/', async (c) =>{
       }).$extends(withAccelerate());
 
       const body = await c.req.json();
-      console.log("body while updating post", body);
+      const { success } = updateBlog.safeParse(body);
 
      const blog = await prisma.post.update({
           where:{
@@ -120,5 +128,5 @@ blogRouter.get('/:id', async (c) =>{
 
       return c.json({
         data: blog
-      })
+       })
 })
