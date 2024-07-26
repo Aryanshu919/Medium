@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom"
+
 interface BlogCardProps {
+    id: string,
     authorName : string,
     title: string,
     content : string,
@@ -6,29 +9,31 @@ interface BlogCardProps {
 
 }
 
-export const BlogCard =({authorName, title, content, publishedDate} : BlogCardProps) =>{
-    return <div className="border border-slate-200 pb-4">
+export const BlogCard =({id, authorName, title, content, publishedDate} : BlogCardProps) =>{
+
+return <Link to={`/blog/${id}`}>
+<div className="border-b border-slate-200 p-4 pb-4 w-screen max-w-screen-md cursor-pointer">
         <div className="flex">
-            <div className="flex justify-center flex-col">
                 <Avatar name={authorName}/>
-            </div>
-            <div className="font-e pl-2">{authorName} </div> 
-            <div className="flex justify-center flex-col ml-2">
+            <div className="font-extralight pl-2 flex justify-center flex-col">{authorName} </div> 
+            <div className="flex justify-center flex-col pl-2">
                 <Circle />
             </div>
-            <div className="pl-2 text-sm font-thin">{publishedDate}</div>
-            
+            <div className="pl-2 text-sm font-thin flex justify-center flex-col">
+                {publishedDate}
+            </div>
         </div>
-        <div>
+        <div className="text-xl font-semibold pt-2">
             {title}
         </div>
-        <div>
-            {content.slice(0,100) + "... "}
+        <div className="text-md font-thin">
+            {content.slice(0,100) + "... "} 
         </div>
-        <div className="text-gray-500 text-xs font-light">
+        <div className="text-gray-500 text-sm font-thin pt-2">
             {`${Math.ceil(content.length / 100)} min read `}
         </div>
     </div>
+</Link>
 }
 
 function Circle(){
@@ -36,8 +41,8 @@ function Circle(){
     </div>
 }
 
-function Avatar({name} : {name: string}){
-    return <div className="relative inline-flex items-center justify-center w-4 h-4 overflow-hidden 
+export function Avatar({name} : {name: string | "anonymous"}){
+    return <div className="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden 
     bg-gray-100 rounded-full dark:bg-gray-600">
         <span className="text-xs text-gray-600 dark:text-gray-300">{name[0].toUpperCase()}</span>
     </div>
