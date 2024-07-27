@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react"
 import { BACKEND_URL } from "../config";
 import axios from "axios";
- 
+
+export interface Blog{
+    title: string;
+    content: string;
+    author:{name: string}
+    id: string;
+    published: string;
+}
 
 export const useBlog = ({id}: {id: string}) =>{
-    const [blog, setBlog] = useState();
+    const [blog, setBlog] = useState<Blog>();
     const [loading , setLoading] = useState(true);
 
     useEffect(() => {
@@ -14,11 +21,11 @@ export const useBlog = ({id}: {id: string}) =>{
         }
         }).then(response =>{
             
-            setBlog(response.data.blogs);
+            setBlog(response.data.data);
             setLoading(false);
         })
     },[id])
-    
+    console.log(blog);
     return {
         blog,
         loading,

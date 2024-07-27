@@ -3,6 +3,7 @@ import { Loader } from "../components/Loader";
 import { useBlog } from "../hooks"
 import { FullBlog } from "../components/FullBlog";
 
+  
 export const Blog = () =>{
     const {id} = useParams();
     const { blog, loading } = useBlog({
@@ -14,6 +15,6 @@ export const Blog = () =>{
         </div>
     }
     return <div> 
-            <FullBlog />
+           <FullBlog blog = {blog} /> 
         </div>
 }

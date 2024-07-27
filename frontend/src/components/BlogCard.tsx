@@ -36,7 +36,7 @@ return <Link to={`/blog/${id}`}>
 </Link>
 }
 
-function Circle(){
+export function Circle(){
     return <div className="bg-gray-400 w-1 h-1 rounded-full">
     </div>
 }
